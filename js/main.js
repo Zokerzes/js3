@@ -1,50 +1,66 @@
 
+let timer = {
+  id: 'timer',
+  timerInterval: null,
+  setId: function (name) {
+    this.id = name;
+  },
+  init: function () {
 
+    let _timer = document.createElement('timer');
 
-function createTimer() {
+    _timer.setAttribute('id', this.id);
 
-  let _timer = document.createElement('timer');
+    let input = document.createElement('input');
+    input.setAttribute('type', 'number');
 
-  _timer.setAttribute('id', 'timer');
+    let submit = document.createElement('input');
+    submit.setAttribute('type', 'submit');
 
-  let input = document.createElement('input');
-  input.setAttribute('type', 'number');
+    document.body.append(input);
+    document.body.append(_timer);
+    document.body.append(submit);
 
-  let submit = document.createElement('input');
-  submit.setAttribute('type', 'submit');
+    let timerInterval;
 
-  document.body.append(input);
-  document.body.append(_timer);
-  document.body.append(submit);
+    submit.addEventListener('click', function () {
+      if (timerInterval) {
+        alert('Таймер уже идет');
+      } else {
+        timerInterval = setInterval(goTimer, 1000)
+      }
+    })
 
-  let timerInterval;
+    function goTimer() {
+      if (input.value <= 0) {
+        alert('Указано некорректное время');
+        clearInterval(timerInterval);
+        timerInterval = null;
+        return;
+      }
 
-  submit.addEventListener('click', function () {
-    if (timerInterval) {
-      alert('Таймер уже идет');
-    } else {
-      timerInterval = setInterval(goTimer, 1000)
-    }
-  })
+      input.value--;
 
-  function goTimer() {
-    if (input.value <= 0) {
-      alert('Указано некорректное время');
-      clearInterval(timerInterval);
-      timerInterval = null;
-      return;
-    }
-
-    input.value--;
-
-    if (input.value == 0) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      alert('Таймер сработал')
+      if (input.value == 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        alert('Таймер сработал')
+      }
     }
   }
+
+
 }
 
-createTimer();
+t1 = timer;
+t1.setId('one');
+t1.init();
+
+t2 = timer;
+t2.setId('two');
+t2.init();
+
+
+
 
 
